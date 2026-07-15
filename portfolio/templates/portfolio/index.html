@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My Portfolio</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container">
+			<a class="navbar-brand" href="#">DevPortfolio</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navMenu">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+					<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero -->
+	<section class="bg-light py-5">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-8">
+					<h1 class="display-5">Welcome to my portfolio</h1>
+					<p class="lead">A selection of my projects showcasing skills in web development and design.</p>
+				</div>
+				<div class="col-md-4 text-md-end">
+					<a href="#projects" class="btn btn-primary btn-lg">View Projects</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Projects -->
+	<main class="py-5">
+		<div class="container" id="projects">
+			<h2 class="mb-4">Projects</h2>
+			<div class="row g-4">
+				{% for project in projects %}
+				<div class="col-12 col-sm-6 col-lg-4">
+					<div class="card h-100">
+						{% if project.image %}
+						<img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+						{% endif %}
+						<div class="card-body d-flex flex-column">
+							<h5 class="card-title">{{ project.title }}</h5>
+							<p class="card-text">{{ project.description|truncatechars:140 }}</p>
+							<div class="mt-auto">
+								{% if project.demo_url %}
+								<a href="{{ project.demo_url }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">Live</a>
+								{% endif %}
+								{% if project.repo_url %}
+								<a href="{{ project.repo_url }}" class="btn btn-sm btn-primary" target="_blank">Code</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% empty %}
+				<p>No projects to show.</p>
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer class="bg-dark text-light py-3">
+		<div class="container d-flex justify-content-between">
+			<small>&copy; {{ year }}</small>
+            <small id="contact">Contact: <a href="https://www.linkedin.com/in/your-profile" class="text-decoration-none text-light" target="_blank" rel="noopener noreferrer">LinkedIn</a></small>		</div>
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // We will add interactive JavaScript features here next!
+        console.log("Bootstrap layout loaded successfully.");
+    </script>
+</body>
+</html>
